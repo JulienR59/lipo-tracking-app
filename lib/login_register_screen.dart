@@ -20,10 +20,13 @@ class _LoginScreenState extends State<LoginScreen> {
       _error = null;
     });
     try {
-      await Supabase.instance.client.auth.signInWithPassword(
+      final response = await Supabase.instance.client.auth.signInWithPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+      if (response.user != null && mounted) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
     } on AuthException catch (e) {
       setState(() {
         _error = e.message;
