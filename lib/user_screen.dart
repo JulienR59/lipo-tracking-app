@@ -7,7 +7,7 @@ class UserScreen extends StatelessWidget {
   void _logout(BuildContext context) async {
     await Supabase.instance.client.auth.signOut();
     // Pop all routes and return to login
-    Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
   }
 
   @override
